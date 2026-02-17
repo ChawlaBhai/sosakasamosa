@@ -1,47 +1,38 @@
 "use client";
 import { useState } from 'react';
 import { Film } from 'lucide-react';
+import Link from 'next/link';
 import styles from './StashSection.module.css';
 import CategoryFilter from './CategoryFilter';
 import PostCard from './PostCard';
 import AddPostForm from './AddPostForm';
-import { Post, createStashPost, deleteStashPost } from '@/actions/stash';
+import { Post, deleteStashPost } from '@/actions/stash';
 
 interface StashSectionProps {
     initialPosts?: Post[];
 }
 
-const DUMMY_POSTS: Post[] = [
-    {
-        id: '1',
-        url: 'https://www.instagram.com/reel/DEv4OQZzJ14/',
-        category: 'Funny 😂',
-        saved_by: 'Person A',
-        created_at: new Date().toISOString(),
-        type: 'reel'
-    },
-    // ... other dummy posts can be removed as we now fetch real data, but keeping one for safety if no props passed
-];
-
 const CATEGORIES = ["All", "Food 🍜", "Travel ✈️", "Funny 😂", "Inspo ✨", "Date Ideas 💌", "Misc 🌀"];
+const PREVIEW_COUNT = 6; // Show 4-6 most recent on homepage
 
 export default function StashSection({ initialPosts = [] }: StashSectionProps) {
     const [selectedCategory, setSelectedCategory] = useState("All");
-    // Use initialPosts if available, else fallback
-    const [posts, setPosts] = useState<Post[]>(initialPosts.length > 0 ? initialPosts : DUMMY_POSTS);
+    const [posts, setPosts] = useState<Post[]>(initialPosts);
 
     const filteredPosts = selectedCategory === "All"
         ? posts
         : posts.filter(post => post.category === selectedCategory);
 
+    // Show only the most recent posts on homepage
+    const previewPosts = filteredPosts.slice(0, PREVIEW_COUNT);
+    const hasMore = filteredPosts.length > PREVIEW_COUNT;
+
     const handleDelete = async (id: string) => {
-        // Optimistic update
         setPosts(prev => prev.filter(p => p.id !== id));
         try {
             await deleteStashPost(id);
         } catch (error) {
             console.error("Failed to delete", error);
-            // Revert if needed, but for MVP we assume success
         }
     };
 
@@ -63,15 +54,25 @@ export default function StashSection({ initialPosts = [] }: StashSectionProps) {
                     onSelect={setSelectedCategory}
                 />
 
-                {/* Horizontal Scroll */}
-                <div className={styles.horizontalScroll}>
-                    {filteredPosts.map(post => (
+                {/* Responsive Grid (no horizontal scroll) */}
+                <div className={styles.grid}>
+                    {previewPosts.map(post => (
                         <PostCard key={post.id} post={post} onDelete={handleDelete} />
                     ))}
                 </div>
+
                 {filteredPosts.length === 0 && (
                     <div className={styles.emptyState}>
                         <p>No posts found in this category.</p>
+                    </div>
+                )}
+
+                {/* View All button */}
+                {(hasMore || posts.length > PREVIEW_COUNT) && (
+                    <div className={styles.viewAllWrapper}>
+                        <Link href="/stash" className={styles.viewAllBtn}>
+                            View All Stash →
+                        </Link>
                     </div>
                 )}
             </div>

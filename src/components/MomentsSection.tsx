@@ -1,61 +1,41 @@
 "use client";
-import { useState } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
+import Link from 'next/link';
 import styles from './MomentsSection.module.css';
 import AddMomentForm from './AddMomentForm';
 import MomentCard from './MomentCard';
-import { Moment, deleteMoment } from '@/actions/moments';
-import clsx from 'clsx';
+import { Moment } from '@/actions/moments';
 
 interface MomentsSectionProps {
     initialMoments?: Moment[];
 }
 
-const DUMMY_MOMENTS: Moment[] = [
-    {
-        id: '1',
-        title: 'First Coffee Date ☕️',
-        date: '2023-10-12',
-        description: 'The day we realized we both obsess over oat milk lattes. You wore that green sweater.',
-        media_urls: [
-            { id: 'm1', type: 'image', url: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=300&auto=format&fit=crop' },
-            { id: 'm2', type: 'image', url: 'https://images.unsplash.com/photo-1726064823617-683e375264b3?q=80&w=300&auto=format&fit=crop' }
-        ],
-        tags: ['Firsts', 'Date Night'],
-        created_at: new Date().toISOString()
-    },
-];
-
-const ITEMS_PER_PAGE = 6;
+const PREVIEW_COUNT = 4;
 
 export default function MomentsSection({ initialMoments = [] }: MomentsSectionProps) {
-    const allMoments = initialMoments.length > 0 ? initialMoments : DUMMY_MOMENTS;
-    const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
-
-    const visibleMoments = allMoments.slice(0, visibleCount);
-    const hasMore = visibleCount < allMoments.length;
-
-    const loadMore = () => {
-        setVisibleCount(prev => prev + ITEMS_PER_PAGE);
-    };
+    const allMoments = initialMoments;
+    // Show 4 most recent moments (sorted by date desc)
+    const sorted = [...allMoments].sort((a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+    const previewMoments = sorted.slice(0, PREVIEW_COUNT);
+    const hasMore = allMoments.length > PREVIEW_COUNT;
 
     return (
         <section id="moments" className={styles.section}>
             <div className={styles.container}>
                 <div className={styles.header}>
                     <ImageIcon className={styles.icon} size={32} strokeWidth={1.5} />
-                    <h2 className={styles.title}>Wall of Moments</h2>
+                    <div className={styles.titleRow}>
+                        <h2 className={styles.title}>Wall of Moments</h2>
+                        <AddMomentForm />
+                    </div>
                     <p className={styles.subtitle}>chapters of us, pinned forever 📌</p>
                 </div>
 
-                {/* Add New Form */}
-                <div className={styles.formWrapper}>
-                    <AddMomentForm />
-                </div>
-
-                {/* Wall Grid */}
-                <div className={styles.wallGrid}>
-                    {visibleMoments.map((moment, index) => (
+                {/* Preview Grid — 4 most recent */}
+                <div className={styles.previewGrid}>
+                    {previewMoments.map((moment, index) => (
                         <MomentCard
                             key={moment.id}
                             moment={moment}
@@ -64,17 +44,18 @@ export default function MomentsSection({ initialMoments = [] }: MomentsSectionPr
                     ))}
                 </div>
 
-                {hasMore && (
-                    <div className={styles.loadMoreWrapper}>
-                        <button className={styles.loadMoreBtn} onClick={loadMore}>
-                            Load More Moments ✨
-                        </button>
+                {previewMoments.length === 0 && (
+                    <div className={styles.emptyState}>
+                        <p>No moments saved yet. Start making memories! 📷</p>
                     </div>
                 )}
 
-                {!hasMore && allMoments.length > 0 && (
-                    <div className={styles.endMessage}>
-                        <span>And so many more to come... 💕</span>
+                {/* View All */}
+                {hasMore && (
+                    <div className={styles.viewAllWrapper}>
+                        <Link href="/moments" className={styles.viewAllBtn}>
+                            View All Moments →
+                        </Link>
                     </div>
                 )}
             </div>

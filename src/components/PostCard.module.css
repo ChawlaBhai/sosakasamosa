@@ -5,10 +5,7 @@
     box-shadow: var(--comic-shadow);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    min-width: 200px;
-    max-width: 220px;
-    flex-shrink: 0;
-    scroll-snap-align: start;
+    width: 100%;
 }
 
 .card:hover {
@@ -199,11 +196,4 @@
     font-size: 0.5rem;
     color: var(--text-secondary);
     font-family: var(--font-dm-sans), sans-serif;
-}
-
-@media (max-width: 768px) {
-    .card {
-        min-width: 170px;
-        max-width: 190px;
-    }
 }

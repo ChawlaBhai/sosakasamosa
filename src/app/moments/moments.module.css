@@ -1,0 +1,228 @@
+.page {
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 30%, #e1f5fe 100%);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+}
+
+.backLink:hover {
+    color: var(--accent);
+}
+
+.titleArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.icon {
+    color: var(--secondary);
+}
+
+.title {
+    font-family: var(--font-heading), serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    font-family: var(--font-dm-sans), sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.formWrapper {
+    margin-top: 1rem;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.timelineLine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 3px;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+/* Year group */
+.yearGroup {
+    margin-bottom: 2rem;
+}
+
+.yearMarker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: var(--white);
+    border: var(--comic-border);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 1.2rem;
+    font-family: var(--font-heading), serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent);
+    width: fit-content;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: var(--comic-shadow);
+}
+
+/* Timeline item */
+.timelineItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.timelineLeft {
+    flex-direction: row;
+    padding-right: 52%;
+}
+
+.timelineRight {
+    flex-direction: row-reverse;
+    padding-left: 52%;
+}
+
+/* Connector dot */
+.timelineDot {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    z-index: 3;
+}
+
+/* Date badge */
+.dateBadge {
+    position: absolute;
+    top: 0.2rem;
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--white);
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-pill);
+    padding: 0.15rem 0.5rem;
+    z-index: 2;
+}
+
+.timelineLeft .dateBadge {
+    right: calc(48% - 60px);
+}
+
+.timelineRight .dateBadge {
+    left: calc(48% - 60px);
+}
+
+/* Loader */
+.loader {
+    text-align: center;
+    padding: 2rem;
+    font-family: var(--font-dm-sans), sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* End message */
+.endMessage {
+    text-align: center;
+    padding: 2rem 0;
+    font-family: var(--font-heading), serif;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.endHeart {
+    font-size: 1.5rem;
+}
+
+/* Mobile: single column timeline */
+@media (max-width: 768px) {
+    .page {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .timelineLine {
+        left: 20px;
+    }
+
+    .timelineItem {
+        padding-right: 0 !important;
+        padding-left: 50px !important;
+        flex-direction: row !important;
+    }
+
+    .timelineDot {
+        left: 20px;
+    }
+
+    .dateBadge {
+        position: relative;
+        left: auto !important;
+        right: auto !important;
+        margin-bottom: 0.25rem;
+    }
+
+    .timelineLeft .dateBadge,
+    .timelineRight .dateBadge {
+        left: auto;
+        right: auto;
+    }
+}
