@@ -1,0 +1,113 @@
+.card {
+    background: var(--white);
+    border: var(--comic-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--comic-shadow);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Horizontal scroll sizing */
+    min-width: 320px;
+    max-width: 340px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+
+.card:hover {
+    transform: translate(-2px, -3px);
+    box-shadow: 7px 7px 0px var(--accent);
+}
+
+/* Instagram embed container — must NOT restrict height */
+.embedContainer {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Let Instagram's generated iframe expand fully */
+.embedContainer iframe {
+    width: 100% !important;
+    min-height: 400px;
+}
+
+/* Override Instagram blockquote defaults to fit our card */
+.embedContainer blockquote.instagram-media,
+.embedContainer .instagram-media {
+    margin: 0 !important;
+    min-width: unset !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Footer */
+.footer {
+    padding: 0.5rem 0.65rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.2rem;
+}
+
+.category {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-pill);
+    background: var(--primary-light);
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+}
+
+.actions {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.15rem;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.actionBtn:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--accent);
+}
+
+.actionBtn.active {
+    color: var(--primary);
+}
+
+.actionBtn.delete:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.bottomRow {
+    display: flex;
+    align-items: center;
+}
+
+.meta {
+    font-size: 0.55rem;
+    color: var(--text-secondary);
+    font-family: var(--font-dm-sans), sans-serif;
+}
+
+@media (max-width: 768px) {
+    .card {
+        min-width: 290px;
+        max-width: 310px;
+    }
+}

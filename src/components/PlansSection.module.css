@@ -1,0 +1,83 @@
+.section {
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 1.5rem 2rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 90vh;
+}
+
+.header {
+    margin-bottom: 0.75rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.icon {
+    color: var(--secondary);
+    margin-bottom: 0.15rem;
+}
+
+.title {
+    font-family: var(--font-heading), serif;
+    font-size: 2.2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.15rem;
+}
+
+.subtitle {
+    font-family: var(--font-dm-sans), sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.25rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.calendarWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebarWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 1rem;
+    }
+
+    .contentGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .container {
+        max-height: 95vh;
+    }
+}

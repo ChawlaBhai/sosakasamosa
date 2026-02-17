@@ -1,0 +1,60 @@
+.skyContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -5;
+    /* Behind everything */
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cloudSvg {
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.05));
+    width: 100%;
+    height: auto;
+}
+
+.cloudLayer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation-name: drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    /* Duration set inline */
+}
+
+.cloudWrapper {
+    position: absolute;
+    /* Left set inline */
+}
+
+@keyframes drift {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* Make animation smoother by duplicating content or using a wider container? 
+   Simple approach: Just let them drift across. 
+   For infinite loop without gaps, we'd typically need two sets of clouds. 
+   Let's adjust keyframes to start off-screen right and move to off-screen left? 
+   Wait, if we want "roaming", simple drifting is okay.
+*/
+
+@keyframes drift {
+    0% {
+        transform: translateX(100vw);
+    }
+
+    100% {
+        transform: translateX(-100vw);
+    }
+}

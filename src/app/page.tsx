@@ -1,66 +1,51 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+import MobileTabbar from "@/components/MobileTabbar";
+import Hero from "@/components/Hero";
+import StashSection from "@/components/StashSection";
+import MomentsSection from "@/components/MomentsSection";
+import PlansSection from "@/components/PlansSection";
+import KaunKitnaSection from "@/components/KaunKitnaSection";
+import ScrollReveal from "@/components/ScrollReveal";
+import HeartLoader from "@/components/HeartLoader";
+import SkyBackground from "@/components/SkyBackground";
+import styles from "./page.module.css";
+import { getStashPosts } from '@/actions/stash';
+import { getMoments } from '@/actions/moments';
+import { getPlanEvents } from '@/actions/plans';
+import { getTransactions, getBalance } from '@/actions/transactions';
+
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+    const stashPosts = await getStashPosts();
+    const moments = await getMoments();
+    const planEvents = await getPlanEvents();
+    const transactions = await getTransactions();
+    const balance = await getBalance('Person A', 'Person B');
+
+    return (
+        <>
+            <SkyBackground />
+            <HeartLoader />
+            <main className={styles.main}>
+                <Hero />
+                <ScrollReveal>
+                    <StashSection initialPosts={stashPosts || []} />
+                </ScrollReveal>
+                <ScrollReveal>
+                    <MomentsSection initialMoments={moments || []} />
+                </ScrollReveal>
+                <ScrollReveal>
+                    <PlansSection initialEvents={planEvents || []} />
+                </ScrollReveal>
+                <ScrollReveal>
+                    <KaunKitnaSection
+                        initialTransactions={transactions || []}
+                        initialBalance={balance || 0}
+                    />
+                </ScrollReveal>
+            </main>
+            <MobileTabbar />
+        </>
+    );
 }
