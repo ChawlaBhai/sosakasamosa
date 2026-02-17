@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React from 'react';
 import { Play } from 'lucide-react';
 import styles from './MomentCard.module.css';
 import clsx from 'clsx';
@@ -10,54 +10,54 @@ export type MomentMedia = {
     id: string;
     type: 'image' | 'video';
     url: string;
-    thumbnail?: string; // for videos
+    thumbnail?: string;
 };
 
 interface MomentCardProps {
     moment: Moment;
     align?: 'left' | 'right';
+    showConnector?: boolean; // Only show connector on timeline page
     onClick?: () => void;
 }
 
-export default function MomentCard({ moment, align = 'left', onClick }: MomentCardProps) {
-    // Deterministic rotation based on ID to avoid hydration mismatch
-    // (Math.random() causes server/client mismatch)
+export default function MomentCard({ moment, align = 'left', showConnector = false, onClick }: MomentCardProps) {
     const rotation = React.useMemo(() => {
         let hash = 0;
         const str = moment.id || 'default';
         for (let i = 0; i < str.length; i++) {
             hash = str.charCodeAt(i) + ((hash << 5) - hash);
         }
-        // Map to range -2 to 2 roughly
         return (Math.abs(hash) % 400) / 100 - 2;
     }, [moment.id]);
 
     return (
         <div
-            className={clsx(styles.cardWrapper, align === 'right' ? styles.alignRight : styles.alignLeft)}
+            className={clsx(
+                styles.cardWrapper,
+                showConnector && (align === 'right' ? styles.alignRight : styles.alignLeft)
+            )}
             onClick={onClick}
         >
-            {/* The Connector Dot */}
-            <div className={clsx(styles.connector, align === 'right' ? styles.connectorRight : styles.connectorLeft)}>
-                <div className={styles.connectorDot}>❤️</div>
-            </div>
+            {/* Timeline Connector — only on /moments page */}
+            {showConnector && (
+                <div className={clsx(styles.connector, align === 'right' ? styles.connectorRight : styles.connectorLeft)}>
+                    <div className={styles.connectorDot}>❤️</div>
+                </div>
+            )}
 
             <div
                 className={styles.card}
                 style={{ transform: `rotate(${rotation}deg)` }}
             >
-                {/* Title & Date */}
                 <div className={styles.header}>
                     <h3 className={styles.title}>{moment.title}</h3>
                     <span className={styles.date}>{moment.date}</span>
                 </div>
 
-                {/* Description */}
                 {moment.description && (
                     <p className={styles.description}>{moment.description}</p>
                 )}
 
-                {/* Media Strip */}
                 <div className={styles.mediaStrip}>
                     {(moment.media_urls as unknown as MomentMedia[] || []).slice(0, 3).map((item, index) => (
                         <div key={item.id || index} className={styles.mediaItem}>
@@ -80,7 +80,6 @@ export default function MomentCard({ moment, align = 'left', onClick }: MomentCa
                     )}
                 </div>
 
-                {/* Tags */}
                 <div className={styles.tags}>
                     {(moment.tags || []).map(tag => (
                         <span key={tag} className={styles.tag}>{tag}</span>

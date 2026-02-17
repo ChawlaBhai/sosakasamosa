@@ -67,14 +67,12 @@ export default function StashSection({ initialPosts = [] }: StashSectionProps) {
                     </div>
                 )}
 
-                {/* View All button */}
-                {(hasMore || posts.length > PREVIEW_COUNT) && (
-                    <div className={styles.viewAllWrapper}>
-                        <Link href="/stash" className={styles.viewAllBtn}>
-                            View All Stash →
-                        </Link>
-                    </div>
-                )}
+                {/* View All button — always visible */}
+                <div className={styles.viewAllWrapper}>
+                    <Link href="/stash" className={styles.viewAllBtn}>
+                        View All Stash →
+                    </Link>
+                </div>
             </div>
         </section>
     );
