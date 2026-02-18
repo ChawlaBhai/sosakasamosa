@@ -66,3 +66,25 @@ export async function deletePlanEvent(id: string) {
     revalidatePath('/');
     return true;
 }
+
+export async function updatePlanEvent(id: string, updates: Partial<NewPlanEvent>) {
+    if (!isSupabaseConfigured()) {
+        console.warn("Supabase not configured, cannot update event");
+        return null;
+    }
+    const sb = supabase as any;
+    const { data, error } = await sb
+        .from('plans_events')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Error updating plan event:', error);
+        throw new Error('Failed to update event');
+    }
+
+    revalidatePath('/');
+    return data;
+}

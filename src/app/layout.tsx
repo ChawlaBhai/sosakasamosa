@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Alex_Brush, DM_Sans } from "next/font/google";
 import clsx from "clsx";
 import "./globals.css";
+import CatCursor from '@/components/CatCursor';
 
 const instrumentSerif = Instrument_Serif({
     subsets: ["latin"],
@@ -24,22 +25,16 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "SoSaKaSamosa",
-    description: "our little world 🌍",
-    manifest: "/manifest.json",
-    appleWebApp: {
-        capable: true,
-        statusBarStyle: "default",
-        title: "SoSaKaSamosa",
-    },
+    title: 'SoSaKaSamosa',
+    description: 'A digital space for our memories and future',
 };
 
 export const viewport: Viewport = {
-    width: "device-width",
+    // Prevent auto-zoom on mobile inputs
+    width: 'device-width',
     initialScale: 1,
     maximumScale: 1,
     userScalable: false,
-    themeColor: "#C4E0F4", // New Sky Blue Theme
 };
 
 export default function RootLayout({
@@ -50,6 +45,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={clsx(instrumentSerif.variable, alexBrush.variable, dmSans.variable)}>
+                <CatCursor />
                 {children}
             </body>
         </html>

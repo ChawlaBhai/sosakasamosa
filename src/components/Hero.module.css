@@ -211,7 +211,7 @@
     gap: 0.5rem;
     color: var(--text-secondary);
     z-index: 2;
-    opacity: 0.7;
+    opacity: 0;
 }
 
 .arrow {
@@ -261,32 +261,89 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .section {
+        padding: 1rem;
+        height: auto;
+        /* Allow content to fit naturally */
+        min-height: 100vh;
+        justify-content: center;
+    }
+
+    .scrollHint {
+        opacity: 100%;
+    }
+
+    .header {
+        margin-bottom: 2.6pc;
+    }
+
     .wordBold {
-        font-size: 4rem;
+        font-size: 3.5rem;
+        /* Smaller */
+        letter-spacing: 1px;
     }
 
     .wordScript {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .brandSubtitle {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
     }
 
     .videoWrapper {
-        width: 100%;
+        padding: 0.5rem;
+        /* Less padding */
     }
 
     .videoFrame {
-        width: 90vw;
+        width: 100%;
+        /* Max width */
+        border-width: 2px;
+        box-shadow: 4px 4px 0px var(--accent);
+        padding: 2px;
+    }
+
+    .video {
+        border-radius: 12px;
     }
 
     .sticker {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        /* Smaller stickers */
+        z-index: 10;
+    }
+
+    /* Adjust sticker positions to be closer to video, not overflowing */
+    .sticker1 {
+        right: -5px;
+        top: -15px;
+    }
+
+    .sticker2 {
+        left: -5px;
+        bottom: -10px;
+    }
+
+    .sticker3 {
+        left: -10px;
+        top: 30%;
     }
 
     .playBtn {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .playText {
+        font-size: 0.9rem;
+    }
+
+    .controlBtn {
+        width: 40px;
+        height: 40px;
+        right: -10px;
+        bottom: -10px;
     }
 }

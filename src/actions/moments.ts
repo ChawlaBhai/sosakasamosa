@@ -66,3 +66,27 @@ export async function deleteMoment(id: string) {
     revalidatePath('/');
     return true;
 }
+
+export async function updateMoment(id: string, updates: Partial<Database['public']['Tables']['moments']['Update']>) {
+    if (!isSupabaseConfigured()) {
+        console.warn("Supabase not configured, cannot update moment");
+        return null;
+    }
+    const sb = supabase as any;
+    const { data, error } = await sb
+        .from('moments')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Error updating moment:', error);
+        throw new Error('Failed to update moment');
+    }
+
+    revalidatePath('/');
+    revalidatePath('/moments');
+    return data;
+}
+

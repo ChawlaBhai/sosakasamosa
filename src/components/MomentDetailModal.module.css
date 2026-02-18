@@ -1,0 +1,261 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.modal {
+    background: var(--white);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    border: var(--comic-border);
+    border-radius: var(--radius-card);
+    box-shadow: 12px 12px 0px var(--accent);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--white);
+    border: 2px solid var(--accent);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    font-size: 1.2rem;
+    box-shadow: 2px 2px 0px var(--accent);
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.mediaSection {
+    background: #f8f8f8;
+    border-right: 2px dashed var(--accent);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mainMedia {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: #000;
+}
+
+.mainMedia img,
+.mainMedia video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.thumbItem {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    flex-shrink: 0;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.thumbItemActive {
+    opacity: 1;
+    border-color: var(--primary);
+}
+
+.infoSection {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-family: var(--font-heading), serif;
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: var(--primary-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--accent);
+}
+
+.description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    flex: 1;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.tag {
+    background: var(--secondary-light);
+    color: var(--accent);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+}
+
+.footer {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.editBtn,
+.deleteBtn,
+.saveBtn,
+.cancelBtn {
+    padding: 0.6rem 1.2rem;
+    font-family: var(--font-heading), serif;
+    font-weight: 700;
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.editBtn {
+    background: var(--primary);
+    color: var(--accent);
+    box-shadow: 4px 4px 0px var(--accent);
+}
+
+.deleteBtn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+.saveBtn {
+    background: var(--secondary);
+    color: var(--accent);
+    box-shadow: 4px 4px 0px var(--accent);
+}
+
+.cancelBtn {
+    background: #f3f4f6;
+    color: var(--text-secondary);
+}
+
+.editBtn:hover,
+.saveBtn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--accent);
+}
+
+/* Edit Mode Styles */
+.editInput,
+.editDate,
+.editTextarea {
+    width: 100%;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: inherit;
+    margin-bottom: 1rem;
+}
+
+.editInput {
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+}
+
+.uploadMore {
+    width: 80px;
+    height: 80px;
+    border: 2px dashed var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.removeMedia {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+}
+
+@media (max-width: 768px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+
+    .mediaSection {
+        border-right: none;
+        border-bottom: 2px dashed var(--accent);
+    }
+
+    .modal {
+        max-height: 95vh;
+    }
+}

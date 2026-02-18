@@ -5,7 +5,11 @@ import { createMoment } from '@/actions/moments';
 import { supabase } from '@/lib/supabaseClient';
 // import { v4 as uuidv4 } from 'uuid'; // Removed unused import
 
-export default function AddMomentForm() {
+interface AddMomentFormProps {
+    onMomentAdded?: () => void;
+}
+
+export default function AddMomentForm({ onMomentAdded }: AddMomentFormProps) {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [description, setDescription] = useState('');
@@ -83,6 +87,7 @@ export default function AddMomentForm() {
             setTags([]);
             setSelectedFiles([]);
             alert('Moment saved! ✨');
+            onMomentAdded?.();
 
         } catch (error) {
             console.error('Error saving moment:', error);

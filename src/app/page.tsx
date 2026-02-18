@@ -21,7 +21,7 @@ export default async function Home() {
     const moments = await getMoments();
     const planEvents = await getPlanEvents();
     const transactions = await getTransactions();
-    const balance = await getBalance('Person A', 'Person B');
+    const balance = await getBalance('Sahaj', 'Somya');
 
     return (
         <>

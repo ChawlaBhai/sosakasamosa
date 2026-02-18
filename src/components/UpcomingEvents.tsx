@@ -10,9 +10,10 @@ type EventType = PlanEvent['type'];
 interface UpcomingEventsProps {
     events: PlanEvent[];
     onAddEvent?: () => void;
+    onEditEvent?: (event: PlanEvent) => void;
 }
 
-export default function UpcomingEvents({ events, onAddEvent }: UpcomingEventsProps) {
+export default function UpcomingEvents({ events, onAddEvent, onEditEvent }: UpcomingEventsProps) {
     const getEventColor = (type: EventType) => {
         switch (type) {
             case 'anniversary': return '#D4899A';
@@ -133,13 +134,22 @@ export default function UpcomingEvents({ events, onAddEvent }: UpcomingEventsPro
                                     <span className={styles.daysUntil}>{getDaysUntil(event.date)}</span>
                                 </div>
                             </div>
-                            <button
-                                className={styles.deleteBtn}
-                                onClick={() => handleDelete(event.id)}
-                                title="Delete event"
-                            >
-                                <Trash2 size={14} />
-                            </button>
+                            <div className={styles.actionButtons}>
+                                <button
+                                    className={styles.editBtn}
+                                    onClick={() => onEditEvent?.(event)}
+                                    title="Edit event"
+                                >
+                                    ✏️
+                                </button>
+                                <button
+                                    className={styles.deleteBtn}
+                                    onClick={() => handleDelete(event.id)}
+                                    title="Delete event"
+                                >
+                                    <Trash2 size={14} />
+                                </button>
+                            </div>
                         </div>
                     ))
                 )}

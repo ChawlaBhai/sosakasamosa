@@ -1,14 +1,11 @@
 .section {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    padding: 1.5rem 2rem;
-    background-color: rgba(255, 255, 255, 0.15);
+    padding: 3rem 2rem;
+    background-color: transparent;
     display: flex;
     justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    align-items: flex-start;
 }
 
 .container {
@@ -16,15 +13,12 @@
     max-width: 1100px;
     display: flex;
     flex-direction: column;
-    height: auto;
-    max-height: 88vh;
-    gap: 0.5rem;
+    gap: 1.5rem;
 }
 
 .header {
     margin-bottom: 0.35rem;
     text-align: center;
-    flex-shrink: 0;
 }
 
 .icon {
@@ -48,9 +42,7 @@
 .contentGrid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-    gap: 1rem;
-    flex: 1;
-    min-height: 0;
+    gap: 1.5rem;
     align-items: start;
 }
 
@@ -62,8 +54,6 @@
 .sidebarWrapper {
     display: flex;
     flex-direction: column;
-    min-height: 0;
-    max-height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -73,14 +63,11 @@
 
     .contentGrid {
         grid-template-columns: 1fr;
-        gap: 0.75rem;
+        gap: 1.5rem;
     }
 
     .title {
         font-size: 1.6rem;
-    }
-
-    .container {
-        max-height: 92vh;
+        margin-bottom: 0.5rem;
     }
 }

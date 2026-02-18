@@ -10,16 +10,15 @@
     }
 }
 
-.section {
-    height: 100vh;
-    width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+@media (max-width: 768px) {
+    .section {
+        height: auto !important;
+        min-height: auto !important;
+        scroll-snap-align: none;
+        display: block;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
 }
 
 .heading {

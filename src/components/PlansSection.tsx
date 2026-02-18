@@ -22,14 +22,51 @@ export default function PlansSection({ initialEvents = [] }: PlansSectionProps) 
     const events = initialEvents.length > 0 ? initialEvents : DUMMY_EVENTS;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
+    const [editingEvent, setEditingEvent] = useState<PlanEvent | null>(null);
+
+    // Generate recurring events for the calendar view (Current Year + Next Year)
+    const getAllEventsIncludingRecurring = () => {
+        const result: PlanEvent[] = [...events];
+        const now = new Date();
+        const currentYear = now.getFullYear();
+
+        events.forEach(event => {
+            if (event.type === 'birthday' || event.type === 'anniversary') {
+                const eventDate = new Date(event.date);
+                // Project for current year and next year
+                [currentYear, currentYear + 1].forEach(year => {
+                    const projectedDate = `${year}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
+
+                    // Avoid duplicates if the original event is already this date
+                    if (projectedDate !== event.date) {
+                        result.push({
+                            ...event,
+                            date: projectedDate,
+                            id: `${event.id}-${year}`, // Temporary ID for display
+                        } as PlanEvent);
+                    }
+                });
+            }
+        });
+        return result;
+    };
+
+    const allDisplayEvents = getAllEventsIncludingRecurring();
 
     const handleDateSelect = (date: string) => {
         setSelectedDate(date);
+        setEditingEvent(null);
         setIsModalOpen(true);
     };
 
     const handleAddEvent = () => {
         setSelectedDate(undefined);
+        setEditingEvent(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEditEvent = (event: PlanEvent) => {
+        setEditingEvent(event);
         setIsModalOpen(true);
     };
 
@@ -44,10 +81,14 @@ export default function PlansSection({ initialEvents = [] }: PlansSectionProps) 
 
                 <div className={styles.contentGrid}>
                     <div className={styles.calendarWrapper}>
-                        <CalendarGrid events={events} onDateSelect={handleDateSelect} />
+                        <CalendarGrid events={allDisplayEvents} onDateSelect={handleDateSelect} />
                     </div>
                     <div className={styles.sidebarWrapper}>
-                        <UpcomingEvents events={events} onAddEvent={handleAddEvent} />
+                        <UpcomingEvents
+                            events={events}
+                            onAddEvent={handleAddEvent}
+                            onEditEvent={handleEditEvent}
+                        />
                     </div>
                 </div>
 
@@ -55,6 +96,7 @@ export default function PlansSection({ initialEvents = [] }: PlansSectionProps) 
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     initialDate={selectedDate}
+                    eventToEdit={editingEvent}
                 />
             </div>
         </section>

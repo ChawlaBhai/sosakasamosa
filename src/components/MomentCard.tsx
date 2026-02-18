@@ -27,7 +27,7 @@ export default function MomentCard({ moment, align = 'left', showConnector = fal
         for (let i = 0; i < str.length; i++) {
             hash = str.charCodeAt(i) + ((hash << 5) - hash);
         }
-        return (Math.abs(hash) % 400) / 100 - 2;
+        return (Math.abs(hash) % 800) / 100 - 4;
     }, [moment.id]);
 
     return (

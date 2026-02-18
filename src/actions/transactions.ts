@@ -85,15 +85,31 @@ export async function getBalance(personA: string, personB: string) {
 
     let balance = 0;
     // Logic: 
-    // If A paid 100, B owes 50. Balance += 50
-    // If B paid 100, A owes 50. Balance -= 50
+    // Default (Equal): If A paid 100, B owes 50. Balance += 50
+    // Full (For Other): If A paid 100 [FULL], B owes 100. Balance += 100
+    // Settlement: Treated as [FULL] payment.
 
     transactions.forEach((tx: any) => {
-        // Assuming equal split for all transactions for MVP
-        const share = Number(tx.amount) / 2;
-        if (tx.paid_by === personA) {
+        const amount = Number(tx.amount);
+        const isFull = (tx.description || '').includes('[FULL]');
+
+        let share = 0;
+        if (isFull) {
+            share = amount; // The other person owes the full amount
+        } else {
+            share = amount / 2; // Standard split
+        }
+
+        // Normalize names for legacy support
+        let paidBy = tx.paid_by;
+        if (paidBy === 'Person A') paidBy = 'Sahaj';
+        if (paidBy === 'Person B') paidBy = 'Somya';
+
+        if (paidBy === personA || paidBy === 'Sahaj') { // Check both alias and prop just in case
+            // A paid, so B owes A
             balance += share;
-        } else if (tx.paid_by === personB) {
+        } else if (paidBy === personB || paidBy === 'Somya') {
+            // B paid, so A owes B
             balance -= share;
         }
     });
