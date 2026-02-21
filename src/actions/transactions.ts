@@ -79,7 +79,7 @@ export async function getBalance(personA: string, personB: string) {
     const sb = supabase as any;
     const { data: transactions, error } = await sb
         .from('transactions')
-        .select('amount, paid_by');
+        .select('amount, paid_by, description');
 
     if (error || !transactions) return 0;
 

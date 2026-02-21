@@ -18,12 +18,48 @@ export async function getPlanEvents() {
         .select('*')
         .order('date', { ascending: true }); // Soonest first
 
-    if (error) {
-        console.error('Error fetching plan events:', error);
-        return [];
+    const events = (data || []) as PlanEvent[];
+
+    // Fetch Family Birthdays & Anniversaries
+    const { data: family, error: fError } = await sb
+        .from('family_members')
+        .select('id, name, dob, anniversary_date, partner_id');
+
+    if (!fError && family) {
+        family.forEach((m: any) => {
+            // Birthday
+            if (m.dob) {
+                const dobDate = new Date(m.dob);
+                // We show it in current year for calendar display
+                const today = new Date();
+                const eventDate = `${today.getFullYear()}-${String(dobDate.getMonth() + 1).padStart(2, '0')}-${String(dobDate.getDate()).padStart(2, '0')}`;
+                events.push({
+                    id: `bday-${m.id}`,
+                    title: `${m.name}'s Birthday 🎂`,
+                    date: eventDate,
+                    type: 'birthday',
+                    created_at: new Date().toISOString()
+                } as any);
+            }
+
+            // Anniversary
+            if (m.anniversary_date && m.partner_id && m.id < m.partner_id) {
+                const partner = family.find((p: any) => p.id === m.partner_id);
+                const annDate = new Date(m.anniversary_date);
+                const today = new Date();
+                const eventDate = `${today.getFullYear()}-${String(annDate.getMonth() + 1).padStart(2, '0')}-${String(annDate.getDate()).padStart(2, '0')}`;
+                events.push({
+                    id: `ann-${m.id}`,
+                    title: `${m.name} & ${partner?.name || 'Partner'} Anniversary 💍`,
+                    date: eventDate,
+                    type: 'anniversary',
+                    created_at: new Date().toISOString()
+                } as any);
+            }
+        });
     }
 
-    return data;
+    return events;
 }
 
 export async function createPlanEvent(event: NewPlanEvent) {

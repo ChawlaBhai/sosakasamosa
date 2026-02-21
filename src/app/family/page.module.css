@@ -1,0 +1,44 @@
+.main {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.fabHome {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    z-index: 100;
+    width: 64px;
+    height: 64px;
+    background: var(--accent);
+    color: var(--white);
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-decoration: none;
+}
+
+.fabHome:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .fabHome {
+        top: 16px;
+        left: 16px;
+        width: 48px;
+        height: 48px;
+        border-width: 2px;
+    }
+
+    .fabHome svg {
+        width: 24px;
+        height: 24px;
+    }
+}

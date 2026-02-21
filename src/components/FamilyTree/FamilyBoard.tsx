@@ -559,7 +559,7 @@ export default function FamilyBoard() {
                 const midY = (sahajPos.y + somyaPos.y + nodeHeight * 1.2) / 2;
 
                 // Calculate transform to put (midX, midY) at (viewerWidth/2, viewerHeight/2)
-                const scale = 0.8;
+                const scale = viewerWidth <= 768 ? 0.35 : 0.8;
                 const tx = (viewerWidth / 2) - midX * scale;
                 const ty = (viewerHeight / 2) - midY * scale;
 

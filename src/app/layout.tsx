@@ -43,8 +43,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={clsx(instrumentSerif.variable, alexBrush.variable, dmSans.variable)}>
+        <html lang="en" suppressHydrationWarning>
+            <body className={clsx(instrumentSerif.variable, alexBrush.variable, dmSans.variable)} suppressHydrationWarning>
                 <CatCursor />
                 {children}
             </body>
